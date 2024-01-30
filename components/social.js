@@ -7,9 +7,9 @@ import {
   faGithub
 } from '@fortawesome/free-brands-svg-icons'
 
-const Social = () => {
+const Social = ({ iconSize = 'initial' }) => {
   return (
-    <ul className={styles.list}>
+    <ul className={styles.list} style={{ '--icon-size': iconSize }}>
       <li>
         <span href='https://twitter.com/'>
           <FontAwesomeIcon icon={faTwitter} />
@@ -23,7 +23,7 @@ const Social = () => {
         </span>
       </li>
       <li>
-        <span className='https://github.com/'>
+        <span href='https://github.com/'>
           <FontAwesomeIcon icon={faGithub} />
           <span className='sr-only'>Github</span>
         </span>
