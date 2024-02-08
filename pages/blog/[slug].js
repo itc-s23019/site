@@ -1,4 +1,4 @@
-import { getPostBySlug } from 'lib/api'
+import { getPostBySlug, getAllSlugs } from 'lib/api'
 import { extractText } from 'lib/extract-text'
 import Meta from 'components/meta'
 import Container from 'components/container'
@@ -70,11 +70,15 @@ const Post = ({
 export default Post
 
 const getStaticPaths = async () => {
+  const allSlugs = await getAllSlugs()
+
   return {
-    paths: ['/blog/schedule', '/blog/music', '/blog/micro'],
+    paths: allSlugs.map(({ slug }) => `/blog/${slug}`),
     fallback: false
   }
 }
+
+export { getStaticPaths }
 
 const getStaticProps = async context => {
   const slug = context.params.slug
@@ -86,6 +90,7 @@ const getStaticProps = async context => {
   const eyecatch = post.eyecatch ?? eyecatchLocal
 
   const imageBuffer = await getImageBuffer(eyecatch.url)
+
   const { base64 } = await getPlaiceholder(imageBuffer)
   eyecatch.blurDataURL = base64
 
@@ -101,4 +106,4 @@ const getStaticProps = async context => {
   }
 }
 
-export { getStaticPaths, getStaticProps }
+export { getStaticProps }
